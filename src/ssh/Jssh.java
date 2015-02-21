@@ -2,7 +2,7 @@ package ssh;
 import com.jcraft.jsch.*;
 import javax.swing.*;
  
-public class Connect{
+public class Jssh{
   public static void main(String[] arg){
     
     try{
