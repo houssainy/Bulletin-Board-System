@@ -1,6 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import ssh.Jssh;
 
 public class Start {
 	private static final String SERVER_IP = "RW.server";
@@ -10,11 +13,25 @@ public class Start {
 
 	public static void main(String[] args) {
 		try {
-			// TODO(houssainy)
 			Configuration config = readConfigurationFile("system.properties");
-
+			startNetwork(config);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private static void startNetwork(Configuration configuration) {
+		Jssh ssh = new Jssh();
+
+		ArrayList<String> readers = configuration.getReaders();
+		ArrayList<String> writers = configuration.getWriters();
+
+		for (int i = 0; i < readers.size(); i++) {
+			// ssh.startProcess(readers.get(i) , userName, password);
+		}
+
+		for (int i = 0; i < writers.size(); i++) {
+			// ssh.startProcess(writers.get(i) , userName, password);
 		}
 	}
 
