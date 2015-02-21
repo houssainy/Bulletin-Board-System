@@ -1,69 +1,67 @@
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author houssainy
+ *
+ *         Object to hold the system configuration.
+ */
 public class Configuration {
 
+	// Server information
 	private String serverIp;
-	private int serverportno;
-	private int numberOfReaders;
-	private ArrayList<String> readersIp;
-	private int numberOfwriter;
-	private ArrayList<String> writersIp;
+	private int serverPort;
+
+	// Readers list
+	private ArrayList<String> readersIps;
+
+	// Writers list
+	private ArrayList<String> writersIps;
+
 	private int numberOfAccesses;
 
-	protected String getServerIp() {
+	public Configuration() {
+		readersIps = new ArrayList<String>();
+		writersIps = new ArrayList<String>();
+	}
+
+	public String getServerIp() {
 		return serverIp;
 	}
 
-	protected void setServerIp(String serverIp) {
+	public void setServerIp(String serverIp) {
 		this.serverIp = serverIp;
 	}
 
-	protected int getServerportno() {
-		return serverportno;
+	public int getServerPort() {
+		return serverPort;
 	}
 
-	protected void setServerportno(int serverportno) {
-		this.serverportno = serverportno;
+	public void setServerPort(int serverPort) {
+		this.serverPort = serverPort;
 	}
 
-	protected int getNumberOfReaders() {
-		return numberOfReaders;
+	public void addReader(String ip) {
+		readersIps.add(ip);
 	}
 
-	protected void setNumberOfReaders(int numberOfReaders) {
-		this.numberOfReaders = numberOfReaders;
+	public ArrayList<String> getReaders() {
+		return readersIps;
 	}
 
-	protected ArrayList<String> getReadersIp() {
-		return readersIp;
+	public void addWriter(String ip) {
+		writersIps.add(ip);
 	}
 
-	protected void setReadersIp(ArrayList<String> readersIp) {
-		this.readersIp = readersIp;
+	public ArrayList<String> getWriters() {
+		return writersIps;
 	}
 
-	protected int getNumberOfwriter() {
-		return numberOfwriter;
-	}
-
-	protected void setNumberOfwriter(int numberOfwriter) {
-		this.numberOfwriter = numberOfwriter;
-	}
-
-	protected ArrayList<String> getWritersIp() {
-		return writersIp;
-	}
-
-	protected void setWritersIp(ArrayList<String> writersIp) {
-		this.writersIp = writersIp;
-	}
-
-	protected int getNumberOfAccesses() {
+	public int getNumberOfAccesses() {
 		return numberOfAccesses;
 	}
 
-	protected void setNumberOfAccesses(int numberOfAccesses) {
+	public void setNumberOfAccesses(int numberOfAccesses) {
 		this.numberOfAccesses = numberOfAccesses;
 	}
-
 }
