@@ -16,7 +16,6 @@ public class Start {
 			String nextLine = input.nextLine();
 			String[] parts = nextLine.split("=");
 			if (i == 0)
-
 				con.setServerIp(parts[1]);
 			else if (i == 0)
 				con.setServerIp(parts[1]);
