@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import communication_package.Client;
 
-public class ClientMain {
+public class BoardClient {
 	public static void main(String[] args) {
 		Client client = new Client("197.160.131.129", 1992);
 

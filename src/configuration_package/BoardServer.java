@@ -7,11 +7,16 @@ import communication_package.Client;
 import communication_package.Server;
 import communication_package.Server.TCPClientListner;
 
-public class ServerMain {
+public class BoardServer {
 	public static void main(String[] args) {
+		if (args == null || args.length < 2) {
+			System.err.println("There is missing arguments!");
+			return;
+		}
+		int port = Integer.parseInt(args[0].trim());
 		Server server = new Server();
 		server.setListner(clientListner);
-		server.start(1992);
+		server.start(port);
 	}
 
 	static TCPClientListner clientListner = new TCPClientListner() {
@@ -28,10 +33,8 @@ public class ServerMain {
 					System.out.println("Me > " + new String(data, "UTF-8"));
 				} while (!msg.equals("exit"));
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
