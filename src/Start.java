@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Start {
-	Configuration con = new Configuration();
 
-	void readConfigurationFile(String infile) throws FileNotFoundException {
-		File file = new File(infile);
-		Scanner input = new Scanner(file);
+	public Configuration readConfigurationFile(String filePath) throws FileNotFoundException {
+		Configuration configuration = new Configuration();
+		Scanner input = new Scanner(new File(filePath));
+		
 		int i = 0;
 		ArrayList<String> Reader = new ArrayList<String>();
 		ArrayList<String> Writer = new ArrayList<String>();
@@ -16,14 +16,13 @@ public class Start {
 			String nextLine = input.nextLine();
 			String[] parts = nextLine.split("=");
 			if (i == 0)
-
-				con.setServerIp(parts[1]);
+				configuration.setServerIp(parts[1]);
 			else if (i == 0)
-				con.setServerIp(parts[1]);
+				configuration.setServerIp(parts[1]);
 			else if (i == 1)
-				con.setServerportno(Integer.parseInt(parts[1].trim()));
+				configuration.setServerportno(Integer.parseInt(parts[1].trim()));
 			else if (i == 2)
-				con.setNumberOfReaders(Integer.parseInt(parts[1].trim()));
+				configuration.setNumberOfReaders(Integer.parseInt(parts[1].trim()));
 			else if (i == 3)
 				Reader.add(parts[1]);
 			else if (i == 4)
@@ -32,9 +31,9 @@ public class Start {
 				Reader.add(parts[1]);
 			else if (i == 6) {
 				Reader.add(parts[1]);
-				con.setReadersIp(Reader);
+				configuration.setReadersIp(Reader);
 			} else if (i == 7)
-				con.setNumberOfwriter(Integer.parseInt(parts[1].trim()));
+				configuration.setNumberOfwriter(Integer.parseInt(parts[1].trim()));
 			else if (i == 8)
 				Writer.add(parts[1]);
 			else if (i == 9)
@@ -43,16 +42,16 @@ public class Start {
 				Writer.add(parts[1]);
 			else if (i == 11) {
 				Writer.add(parts[1]);
-				con.setWritersIp(Writer);
+				configuration.setWritersIp(Writer);
 			} else if (i == 12) {
-
-				con.setNumberOfAccesses(Integer.parseInt(parts[1].trim()));
+				configuration.setNumberOfAccesses(Integer.parseInt(parts[1].trim()));
 			}
 
 			i++;
 		}
 
 		input.close();
+		return configuration;
 	}
 
 	public static void main(String[] args) {
