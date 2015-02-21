@@ -30,14 +30,16 @@ public class Server {
 					serverSocket = new ServerSocket(port);
 					while (running) {
 						final Socket socket = serverSocket.accept();
-						if (socket != null && listner != null) {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									System.out.println("New Client connected.");
-									listner.onNewClient(new Client(socket));
-								}
-							}).start();
+						if (socket != null) {
+							System.out.println("New Client connected.");
+							if (listner != null) {
+								new Thread(new Runnable() {
+									@Override
+									public void run() {
+										listner.onNewClient(new Client(socket));
+									}
+								}).start();
+							}
 						}
 					}
 				} catch (IOException e) {
