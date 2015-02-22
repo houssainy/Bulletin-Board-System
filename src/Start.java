@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import ssh.Jssh;
+import ssh.User;
 
 public class Start {
 	private static final String SERVER_IP = "RW.server";
