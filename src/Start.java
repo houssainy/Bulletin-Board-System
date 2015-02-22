@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import ssh.Jssh;
+import ssh.User;
 
 public class Start {
 	private static final String SERVER_IP = "RW.server";
@@ -14,6 +15,11 @@ public class Start {
 	public static void main(String[] args) {
 		try {
 			Configuration config = readConfigurationFile("system.properties");
+			if (config == null) {
+				System.err
+						.println("ERROR: error in system.properties file format!");
+				return;
+			}
 			startNetwork(config);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -23,15 +29,10 @@ public class Start {
 	private static void startNetwork(Configuration configuration) {
 		Jssh ssh = new Jssh();
 
-		ArrayList<String> readers = configuration.getReaders();
-		ArrayList<String> writers = configuration.getWriters();
+		ArrayList<User> users = configuration.getUsersList();
 
-		for (int i = 0; i < readers.size(); i++) {
-			// ssh.startProcess(readers.get(i) , userName, password);
-		}
-
-		for (int i = 0; i < writers.size(); i++) {
-			// ssh.startProcess(writers.get(i) , userName, password);
+		for (int i = 0; i < users.size(); i++) {
+			// ssh.startProcess(users.get(i));
 		}
 	}
 
@@ -55,21 +56,14 @@ public class Start {
 				break;
 			case NUMBER_OF_READERS:
 				int numOfReaders = Integer.parseInt(configData[1].trim());
-				for (int i = 0; i < numOfReaders && in.hasNext(); i++) {
-					line = in.nextLine();
-					configData = line.split("=");
+				for (int i = 0; i < numOfReaders && in.hasNext(); i++)
+					readUserData(in, configuration, User.TYPE_READER);
 
-					configuration.addReader(configData[1].trim());
-				}
 				break;
 			case NUMBER_OF_WRITERS:
 				int numOfWriters = Integer.parseInt(configData[1].trim());
-				for (int i = 0; i < numOfWriters && in.hasNext(); i++) {
-					line = in.nextLine();
-					configData = line.split("=");
-
-					configuration.addWriter(configData[1].trim());
-				}
+				for (int i = 0; i < numOfWriters && in.hasNext(); i++)
+					readUserData(in, configuration, User.TYPE_WRITER);
 				break;
 			default:
 				break;
@@ -77,6 +71,33 @@ public class Start {
 		}
 		in.close();
 		return configuration;
+	}
+
+	private static void readUserData(Scanner in, Configuration configuration,
+			String type) {
+		String line = "";
+		String[] configData;
+
+		// ip
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String ip = configData[1].trim();
+
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String userName = configData[1].trim();
+
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String password = configData[1].trim();
+
+		configuration.addUser(new User(ip, userName, password, type));
 	}
 
 }
