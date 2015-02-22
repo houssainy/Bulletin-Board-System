@@ -12,17 +12,12 @@ public class Configuration {
 	private String serverIp;
 	private int serverPort;
 
-	// Readers list
-	private ArrayList<String> readersIps;
-
-	// Writers list
-	private ArrayList<String> writersIps;
+	private ArrayList<User> users;
 
 	private int numberOfAccesses;
 
 	public Configuration() {
-		readersIps = new ArrayList<String>();
-		writersIps = new ArrayList<String>();
+		users = new ArrayList<User>();
 	}
 
 	public String getServerIp() {
@@ -41,20 +36,12 @@ public class Configuration {
 		this.serverPort = serverPort;
 	}
 
-	public void addReader(String ip) {
-		readersIps.add(ip);
+	public void addUser(User user) {
+		users.add(user);
 	}
 
-	public ArrayList<String> getReaders() {
-		return readersIps;
-	}
-
-	public void addWriter(String ip) {
-		writersIps.add(ip);
-	}
-
-	public ArrayList<String> getWriters() {
-		return writersIps;
+	public ArrayList<User> getUsersList() {
+		return users;
 	}
 
 	public int getNumberOfAccesses() {
