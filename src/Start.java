@@ -67,13 +67,13 @@ public class Start {
 			case NUMBER_OF_READERS:
 				int numOfReaders = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfReaders && in.hasNext(); i++)
-					readUserData(in, configuration, User.TYPE_READER);
+					readUserData(in, configuration);
 
 				break;
 			case NUMBER_OF_WRITERS:
 				int numOfWriters = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfWriters && in.hasNext(); i++)
-					readUserData(in, configuration, User.TYPE_WRITER);
+					readUserData(in, configuration);
 				break;
 			default:
 				break;
@@ -83,8 +83,7 @@ public class Start {
 		return configuration;
 	}
 
-	private static void readUserData(Scanner in, Configuration configuration,
-			String type) {
+	private static void readUserData(Scanner in, Configuration configuration) {
 		String line = "";
 		String[] configData;
 
@@ -116,7 +115,7 @@ public class Start {
 		configData = line.split("=");
 		String filePath = configData[1].trim();
 		
-		configuration.addUser(new User(ip, userName, password, filePath, type));
+		configuration.addUser(new User(ip, userName, password, filePath));
 	}
 
 }

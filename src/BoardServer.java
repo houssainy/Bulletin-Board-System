@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
 
 import messages_package.MessageOperator;
 import messages_package.MessageOperator.Message;
@@ -65,7 +68,28 @@ public class BoardServer {
 				System.err.println("ERROR: Message corrupted.");
 				return;
 			}
+
+			switch (msg.getType()) {
+			case MessageOperator.READ_MSG:
+				String file = getFileData(msg.getFilePath());
+				break;
+			case MessageOperator.WRITE_MSG:
+
+				break;
+			case MessageOperator.BYE_MSG:
+
+				break;
+			}
+		}
+
+		private String getFileData(String filePath) {
+			try {
+				Scanner in = new Scanner(new File(filePath));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			
+			return null;
 		}
 	};
 }
