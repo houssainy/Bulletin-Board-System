@@ -188,4 +188,9 @@ public class Jssh {
 			}
 		}
 	}
+
+	public void startProcess(User user) {
+		// TODO Auto-generated method stub
+		
+	}
 }
