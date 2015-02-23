@@ -8,67 +8,55 @@ import java.io.*;
 public class Jssh {
 
 	public static void main(String[] arg) {
-		t();
-		t();
+		Thread x = new Thread(new Runnable() {
+			public void run() {
+				User x = new User("192.168.1.24", "houssainy", "mohamed1992",
+						"test1.py","");
+				startProcess(x);
+			}
+
+		});
+		x.start();
+
+		Thread y = new Thread(new Runnable() {
+			public void run() {
+				User t = new User("192.168.1.15", "mohamedsaad", "7192",
+						"test.py", "");
+				startProcess(t);
+			}
+
+		});
+		y.start();
+		Thread z = new Thread(new Runnable() {
+			public void run() {
+				User x = new User("192.168.1.24", "houssainy", "mohamed1992",
+						"test.py","");
+				startProcess(x);
+			}
+
+		});
+		z.start();
+		// t();
+		// t();
 	}
 
-	public static void t() {
+	public static void startProcess(User currentUser) {
 		try {
+			// String ip = currentUser.g;
+			// ,String User,String Password,String fileName;
+
 			JSch jsch = new JSch();
-			//
-			// String host=null;
-			// if(arg.length>0){
-			// host=arg[0];
-			// }
-			// else{
-			// host=JOptionPane.showInputDialog("Enter username@hostname",
-			// System.getProperty("user.name")+
-			// "@localhost");
-			// }
-			// String user=host.substring(0, host.indexOf('@'));
-			// host=host.substring(host.indexOf('@')+1);
-			//
-			// Session session=jsch.getSession(user, host, 22);
-			Session session = jsch.getSession("houssainy", "197.160.131.129",
-					22);
-
-			// String passwd = JOptionPane.showInputDialog("Enter password");
-			session.setPassword("mohamed1992");
-			/*
-			 * String xhost="127.0.0.1"; int xport=0; String
-			 * display=JOptionPane.showInputDialog("Enter display name",
-			 * xhost+":"+xport); xhost=display.substring(0,
-			 * display.indexOf(':'));
-			 * xport=Integer.parseInt(display.substring(display
-			 * .indexOf(':')+1)); session.setX11Host(xhost);
-			 * session.setX11Port(xport+6000);
-			 */
-
-			// username and password will be given via UserInfo interface.
+			Session session = jsch.getSession(currentUser.getUserName(),
+					currentUser.getIp(), 22);
+			session.setPassword(currentUser.getPassword());
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
-
-			String command = "python Desktop/test.py";
-
+			String command = "python " + currentUser.getFilePath();
 			Channel channel = session.openChannel("exec");
 			((ChannelExec) channel).setCommand(command);
-
-			((ChannelExec) channel).setCommand(command);
-
-			// X Forwarding
-			// channel.setXForwarding(true);
-
-			// channel.setInputStream(System.in);
 			channel.setInputStream(null);
-
-			// channel.setOutputStream(System.out);
-
-			// FileOutputStream fos=new FileOutputStream("/tmp/stderr");
-			// ((ChannelExec)channel).setErrStream(fos);
 			((ChannelExec) channel).setErrStream(System.err);
-
 			InputStream in = channel.getInputStream();
-
 			channel.connect();
 
 			byte[] tmp = new byte[1024];
@@ -82,6 +70,7 @@ public class Jssh {
 				if (channel.isClosed()) {
 					if (in.available() > 0)
 						continue;
+					System.out.println(Thread.currentThread());
 					System.out.println("exit-status: "
 							+ channel.getExitStatus());
 					break;
@@ -189,8 +178,8 @@ public class Jssh {
 		}
 	}
 
-	public void startProcess(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+	// public void startProcess(User user) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 }
