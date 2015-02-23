@@ -1,8 +1,6 @@
 package ssh;
 
 public class User {
-	public static final String TYPE_READER = "READER";
-	public static final String TYPE_WRITER = "WRITER";
 
 	private String ip;
 	private String userName;
