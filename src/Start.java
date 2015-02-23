@@ -109,7 +109,14 @@ public class Start {
 		configData = line.split("=");
 		String password = configData[1].trim();
 
-		configuration.addUser(new User(ip, userName, password, type));
+		// File Path
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String filePath = configData[1].trim();
+		
+		configuration.addUser(new User(ip, userName, password, filePath, type));
 	}
 
 }

@@ -8,26 +8,52 @@ import java.util.Scanner;
 /**
  * 
  * @author houssainy
- *	
- *		Class to generate and parse Bulletin message format.
+ *
+ *         Class to generate and parse Bulletin message format.
  */
 public class MessageOperator {
 	public static final String READ_MSG = "read_msg";
 	public static final String WRITE_MSG = "write_msg";
 	public static final String BYE_MSG = "bye_msg";
 
-	public String generateMessage(String msg, String type) throws UnkownMessage {
+	/**
+	 * Message format:
+	 * 
+	 * write_msg\n <filePath>\n data\n
+	 * 
+	 * @param data
+	 */
+	public String generateWriteMessage(String data, String filePath) {
 		StringBuilder generatedMsg = new StringBuilder();
-		if (type.equals(READ_MSG))
-			generatedMsg.append(READ_MSG + "\n");
-		else if (type.equals(WRITE_MSG))
-			generatedMsg.append(WRITE_MSG + "\n");
-		else if (type.equals(BYE_MSG))
-			generatedMsg.append(BYE_MSG + "\n");
-		else
-			throw new UnkownMessage("ERROR: Unkown Message Type!");
+		generatedMsg.append(WRITE_MSG + "\n");
+		generatedMsg.append(filePath + "\n");
+		generatedMsg.append(data);
+		return generatedMsg.toString();
+	}
 
-		generatedMsg.append(msg);
+	/**
+	 * Message format:
+	 * 
+	 * read_msg\n <filePath>\n
+	 */
+	public String generateReadMessage(String filePath) {
+		StringBuilder generatedMsg = new StringBuilder();
+		generatedMsg.append(READ_MSG + "\n");
+
+		generatedMsg.append(filePath);
+		return generatedMsg.toString();
+	}
+
+	/**
+	 * Message format:
+	 * 
+	 * bye_msg\n
+	 * 
+	 */
+	public String generateByeMessage() {
+		StringBuilder generatedMsg = new StringBuilder();
+		generatedMsg.append(BYE_MSG + "\n");
+
 		return generatedMsg.toString();
 	}
 
@@ -44,19 +70,41 @@ public class MessageOperator {
 				&& !type.equals(BYE_MSG))
 			return null;
 
-		StringBuilder parsedMsg = new StringBuilder();
-		while (in.hasNext())
-			parsedMsg.append(in.next());
+		Message message = new Message(type);
+		String filePath = "";
 
-		return new Message(type, parsedMsg.toString());
+		switch (type) {
+		case READ_MSG:
+			if (!in.hasNext())
+				return null;
+			
+			filePath = in.nextLine();
+			message.setFilePath(filePath);
+			
+			break;
+		case WRITE_MSG:
+			if (!in.hasNext())
+				return null;
+			
+			filePath = in.nextLine();
+			StringBuilder parsedMsg = new StringBuilder();
+			
+			while (in.hasNext())
+				parsedMsg.append(in.next());
+			
+			message.setFilePath(filePath);
+			message.setMsg(parsedMsg.toString());
+			break;
+		}
+		return message;
 	}
 
 	public class Message {
 		private String type;
 		private String msg;
+		private String filePath;
 
-		public Message(String msg, String type) {
-			this.msg = msg;
+		public Message(String type) {
 			this.type = type;
 		}
 
@@ -66,6 +114,18 @@ public class MessageOperator {
 
 		public String getMsg() {
 			return msg;
+		}
+
+		public void setMsg(String msg) {
+			this.msg = msg;
+		}
+
+		public String getFilePath() {
+			return filePath;
+		}
+
+		public void setFilePath(String filePath) {
+			this.filePath = filePath;
 		}
 	}
 
