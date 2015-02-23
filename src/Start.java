@@ -6,6 +6,15 @@ import java.util.Scanner;
 import ssh.Jssh;
 import ssh.User;
 
+/**
+ * 
+ * @author houssainy
+ *
+ *         Responsible for starting the server and the clients. First it create
+ *         a thread, which will run the server code. Then, it start clients.
+ *         This program will read a configuration file and start up the system
+ *         accordingly.
+ */
 public class Start {
 	private static final String SERVER_IP = "RW.server";
 	private static final String SERVER_PORT = "RW.server.port";
@@ -31,11 +40,12 @@ public class Start {
 
 		ArrayList<User> users = configuration.getUsersList();
 
-		for (int i = 0; i < users.size(); i++) {
-			// ssh.startProcess(users.get(i));
-		}
+		for (int i = 0; i < users.size(); i++)
+			ssh.startProcess(users.get(i));
 	}
 
+	// Read system properties file, parse it and return the data encapsulated in
+	// Configuration object
 	private static Configuration readConfigurationFile(String filePath)
 			throws FileNotFoundException {
 		Configuration configuration = new Configuration();
@@ -85,12 +95,14 @@ public class Start {
 		configData = line.split("=");
 		String ip = configData[1].trim();
 
+		// User name
 		if (!in.hasNext())
 			return;
 		line = in.nextLine();
 		configData = line.split("=");
 		String userName = configData[1].trim();
 
+		// Password
 		if (!in.hasNext())
 			return;
 		line = in.nextLine();
