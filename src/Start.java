@@ -56,11 +56,12 @@ public class Start {
 		Scanner in = new Scanner(new File(filePath));
 
 		String line = "";
+		User server = new User();
 		while (in.hasNext()) {
 			line = in.nextLine();
 
 			String[] configData = line.split("=");
-			User server = new User();
+
 			switch (configData[0]) {
 			case SERVER_IP:
 				server.setIp(configData[1].trim());
