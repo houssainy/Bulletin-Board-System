@@ -22,15 +22,15 @@ public class BoardClient {
 			return;
 		}
 
-		//String serverIp = "127.0.0.1";//args[0];
+		//String serverIp = "172.16.8.81";//args[0];
 		String serverIp = args[0];
-//		int serverPort = 1992;//Integer.parseInt(args[1].trim());
+		//int serverPort = 8007;//Integer.parseInt(args[1].trim());
 		int serverPort = Integer.parseInt(args[1].trim());
 
 		// Connect to Server
 		Client client = new Client(serverIp, serverPort);
-		System.out.println("Connected to Server " + serverIp + " on port "
-				+ serverPort);
+//		System.out.println("Connected to Server " + serverIp + " on port "
+//				+ serverPort);
 
 		int input = 0;
 		msgOperator = new MessageOperator();

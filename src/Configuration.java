@@ -19,7 +19,7 @@ public class Configuration {
 
 	public Configuration() {
 		users = new ArrayList<User>();
-		server = new User();
+//		server = new User(User.);
 	}
 
 	public void setServer(User server) {
