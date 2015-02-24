@@ -66,40 +66,49 @@ public class MessageOperator {
 				msg.getBytes(StandardCharsets.UTF_8));
 		Scanner in = new Scanner(stream);
 
-		if (!in.hasNext())
+		if (!in.hasNext()) {
+			in.close();
 			return null;
+		}
 		String type = in.nextLine();
 
 		if (!type.equals(READ_MSG) && !type.equals(WRITE_MSG)
-				&& !type.equals(BYE_MSG))
+				&& !type.equals(BYE_MSG)) {
+			in.close();
 			return null;
+		}
 
 		Message message = new Message(type);
 		String filePath = "";
 
 		switch (type) {
 		case READ_MSG:
-			if (!in.hasNext())
+			if (!in.hasNext()) {
+				in.close();
 				return null;
+			}
 
 			filePath = in.nextLine();
 			message.setFilePath(filePath);
 
 			break;
 		case WRITE_MSG:
-			if (!in.hasNext())
+			if (!in.hasNext()) {
+				in.close();
 				return null;
+			}
 
 			filePath = in.nextLine();
 
 			StringBuilder parsedMsg = new StringBuilder();
 			while (in.hasNext())
-				parsedMsg.append(in.nextLine()+ "\n");
+				parsedMsg.append(in.nextLine() + "\n");
 
 			message.setFilePath(filePath);
 			message.setMsg(parsedMsg.toString());
 			break;
 		}
+		in.close();
 		return message;
 	}
 
@@ -134,21 +143,26 @@ public class MessageOperator {
 				response.getBytes(StandardCharsets.UTF_8));
 		Scanner in = new Scanner(stream);
 
-		if (!in.hasNext())
+		if (!in.hasNext()) {
+			in.close();
 			return null;
+		}
 		String type = in.nextLine();
 
-		if (!type.equals(MAX_ACCESS_RESPONSE) && !type.equals(READ_RESPONSE))
+		if (!type.equals(MAX_ACCESS_RESPONSE) && !type.equals(READ_RESPONSE)) {
+			in.close();
 			return null;
+		}
 
 		Response resp = new Response(type);
 		if (type.equals(READ_RESPONSE)) {
 			StringBuilder data = new StringBuilder("");
 			while (in.hasNext())
-				data.append(in.nextLine()+ "\n");
+				data.append(in.nextLine() + "\n");
 			resp.setData(data.toString());
 		}
 
+		in.close();
 		return resp;
 	}
 
