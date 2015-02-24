@@ -19,6 +19,8 @@ public class Client {
 	// Socket connected to server
 	private Socket socket;
 
+	private int clientId;
+
 	/**
 	 * Connect to the server with IP and port number.
 	 * 
@@ -28,8 +30,7 @@ public class Client {
 	public Client(String ip, int port) {
 		try {
 			socket = new Socket(InetAddress.getByName(ip), port);
-			System.out
-					.println("Connected to Server " + ip + " on port " + port);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +107,7 @@ public class Client {
 
 		// Ensure all the bytes have been read in
 		if (offset < data.length)
-			throw new IOException("Could not completely receieve data!");
+			return null;
 
 		return data;
 	}
@@ -126,5 +127,13 @@ public class Client {
 			bis.close();
 			bis = null;
 		}
+	}
+
+	public int getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
 	}
 }

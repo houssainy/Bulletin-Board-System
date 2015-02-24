@@ -31,7 +31,6 @@ public class Server {
 					while (running) {
 						final Socket socket = serverSocket.accept();
 						if (socket != null) {
-							System.out.println("New Client connected.");
 							if (listner != null) {
 								new Thread(new Runnable() {
 									@Override

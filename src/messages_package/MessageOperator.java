@@ -16,6 +16,9 @@ public class MessageOperator {
 	public static final String WRITE_MSG = "write_msg";
 	public static final String BYE_MSG = "bye_msg";
 
+	public static final String READ_RESPONSE = "READ_RESPONSE";
+	public static final String MAX_ACCESS_RESPONSE = "max_acess_response";
+
 	/**
 	 * Message format:
 	 * 
@@ -28,6 +31,7 @@ public class MessageOperator {
 		generatedMsg.append(WRITE_MSG + "\n");
 		generatedMsg.append(filePath + "\n");
 		generatedMsg.append(data);
+
 		return generatedMsg.toString();
 	}
 
@@ -39,8 +43,8 @@ public class MessageOperator {
 	public String generateReadMessage(String filePath) {
 		StringBuilder generatedMsg = new StringBuilder();
 		generatedMsg.append(READ_MSG + "\n");
+		generatedMsg.append(filePath + "\n");
 
-		generatedMsg.append(filePath);
 		return generatedMsg.toString();
 	}
 
@@ -77,26 +81,75 @@ public class MessageOperator {
 		case READ_MSG:
 			if (!in.hasNext())
 				return null;
-			
+
 			filePath = in.nextLine();
 			message.setFilePath(filePath);
-			
+
 			break;
 		case WRITE_MSG:
 			if (!in.hasNext())
 				return null;
-			
+
 			filePath = in.nextLine();
+
 			StringBuilder parsedMsg = new StringBuilder();
-			
 			while (in.hasNext())
-				parsedMsg.append(in.next());
-			
+				parsedMsg.append(in.nextLine()+ "\n");
+
 			message.setFilePath(filePath);
 			message.setMsg(parsedMsg.toString());
 			break;
 		}
 		return message;
+	}
+
+	/**
+	 * 
+	 * Response format:
+	 * 
+	 * OK\n data
+	 */
+	public String generateResponse(String type, String data) {
+		StringBuilder generatedResponse = new StringBuilder();
+		generatedResponse.append(type + "\n");
+
+		generatedResponse.append(data);
+		return generatedResponse.toString();
+	}
+
+	/**
+	 * Response format:
+	 * 
+	 * <type>\n
+	 */
+	public String generateResponse(String type) {
+		StringBuilder generatedResponse = new StringBuilder();
+		generatedResponse.append(type + "\n");
+
+		return generatedResponse.toString();
+	}
+
+	public Response parseResponse(String response) {
+		InputStream stream = new ByteArrayInputStream(
+				response.getBytes(StandardCharsets.UTF_8));
+		Scanner in = new Scanner(stream);
+
+		if (!in.hasNext())
+			return null;
+		String type = in.nextLine();
+
+		if (!type.equals(MAX_ACCESS_RESPONSE) && !type.equals(READ_RESPONSE))
+			return null;
+
+		Response resp = new Response(type);
+		if (type.equals(READ_RESPONSE)) {
+			StringBuilder data = new StringBuilder("");
+			while (in.hasNext())
+				data.append(in.nextLine()+ "\n");
+			resp.setData(data.toString());
+		}
+
+		return resp;
 	}
 
 	public class Message {
@@ -129,9 +182,28 @@ public class MessageOperator {
 		}
 	}
 
-	public class UnkownMessage extends Exception {
-		public UnkownMessage(String string) {
-			super(string);
+	public class Response {
+		private String type;
+		private String data;
+
+		public Response(String type) {
+			this.setType(type);
+		}
+
+		public String getData() {
+			return data;
+		}
+
+		public void setData(String data) {
+			this.data = data;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
 		}
 	}
 }
