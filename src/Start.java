@@ -41,8 +41,8 @@ public class Start {
 		Jssh ssh = new Jssh();
 
 		// Start Server
-		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
-				configuration.getPort());
+//		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
+//				configuration.getPort());
 		
 		ArrayList<User> users = configuration.getUsersList();
 

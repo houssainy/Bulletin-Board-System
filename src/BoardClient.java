@@ -22,9 +22,9 @@ public class BoardClient {
 			return;
 		}
 
-		//String serverIp = "127.0.0.1";//args[0];
+		//String serverIp = "172.16.8.81";//args[0];
 		String serverIp = args[0];
-//		int serverPort = 1992;//Integer.parseInt(args[1].trim());
+		//int serverPort = 8007;//Integer.parseInt(args[1].trim());
 		int serverPort = Integer.parseInt(args[1].trim());
 
 		// Connect to Server
@@ -79,7 +79,7 @@ public class BoardClient {
 	private static boolean writeDataToServer(Scanner in, Client client) {
 		// Read file path
 		System.out.println("Enter file path in server's device:");
-		String filePath = in.nextLine();
+		String filePath = in.next();
 
 		System.out.println("Write your data and end it by writing __done:");
 		StringBuilder builder = new StringBuilder();
