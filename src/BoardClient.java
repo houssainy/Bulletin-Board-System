@@ -79,7 +79,7 @@ public class BoardClient {
 	private static boolean writeDataToServer(Scanner in, Client client) {
 		// Read file path
 		System.out.println("Enter file path in server's device:");
-		String filePath = in.nextLine();
+		String filePath = in.next();
 
 		System.out.println("Write your data and end it by writing __done:");
 		StringBuilder builder = new StringBuilder();

@@ -118,12 +118,14 @@ public class BoardServer {
 
 			switch (msg.getType()) {
 			case MessageOperator.READ_MSG:
+				System.out.println("Client "+ client.getClientId() + " is Reading...");
 				String file = getFileData(msg.getFilePath());
 				String dataResponse = msgOperator.generateResponse(
 						MessageOperator.READ_RESPONSE, file);
 				client.send(dataResponse.getBytes());
 				break;
 			case MessageOperator.WRITE_MSG:
+				System.out.println("Client "+ client.getClientId() + " is Writing...");
 				writeDataToFile(msg.getFilePath(), msg.getMsg());
 				break;
 			}
