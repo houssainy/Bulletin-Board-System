@@ -42,7 +42,7 @@ public class Start {
 		ArrayList<User> users = configuration.getUsersList();
 
 		for (int i = 0; i < users.size(); i++)
-			ssh.startProcess(users.get(i));
+			ssh.startProcess(users.get(i), configuration.getServerIp(), configuration.getServerPort());
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
