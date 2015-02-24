@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -68,13 +67,13 @@ public class Start {
 			case NUMBER_OF_READERS:
 				int numOfReaders = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfReaders && in.hasNext(); i++)
-					readUserData(in, configuration);
+					readUserData(in, configuration, User.READER_TYPE);
 
 				break;
 			case NUMBER_OF_WRITERS:
 				int numOfWriters = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfWriters && in.hasNext(); i++)
-					readUserData(in, configuration);
+					readUserData(in, configuration, User.WRITER_TYPE);
 				break;
 			default:
 				break;
@@ -84,7 +83,8 @@ public class Start {
 		return configuration;
 	}
 
-	private static void readUserData(Scanner in, Configuration configuration) {
+	private static void readUserData(Scanner in, Configuration configuration,
+			String userType) {
 		String line = "";
 		String[] configData;
 
@@ -115,8 +115,9 @@ public class Start {
 		line = in.nextLine();
 		configData = line.split("=");
 		String filePath = configData[1].trim();
-		
-		configuration.addUser(new User(ip, userName, password, filePath));
+
+		configuration.addUser(new User(ip, userName, password, filePath,
+				userType));
 	}
 
 }
