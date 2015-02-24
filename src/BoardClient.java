@@ -1,4 +1,6 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -32,7 +34,13 @@ public class BoardClient {
 
 		int input = 0;
 		msgOperator = new MessageOperator();
-		Scanner in = new Scanner(System.in);
+		Scanner in = null;
+		try {
+			in = new Scanner(new File("clientCommands.txt"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		boolean done = false;
 		try {
