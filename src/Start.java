@@ -3,6 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.jws.Oneway;
+
 import ssh.Jssh;
 import ssh.User;
 
@@ -45,7 +47,8 @@ public class Start {
 					configuration.getPort());
 
 		// Start Server
-		// User server = new User(ip, userName, password, filePath)
+		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
+				configuration.getPort());
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
