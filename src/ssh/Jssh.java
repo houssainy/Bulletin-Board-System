@@ -28,7 +28,7 @@ public class Jssh {
 
 	}
 
-	private void performShell(final User currentUser, String commandType, int portNumber, String serverIp) {
+	private void performShell(final User currentUser, String serverIp, int portNumber,String commandType ) {
 		try {
 
 			JSch jsch = new JSch();
