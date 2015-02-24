@@ -6,6 +6,9 @@ public class User {
 	private String password;
 	private String filePath;
 
+	public User() {
+	}
+	
 	public User(String ip, String userName, String password, String filePath) {
 		this.ip = ip;
 		this.userName = userName;

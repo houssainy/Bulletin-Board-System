@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -42,7 +41,11 @@ public class Start {
 		ArrayList<User> users = configuration.getUsersList();
 
 		for (int i = 0; i < users.size(); i++)
-			ssh.startProcess(users.get(i), configuration.getServerIp(), configuration.getServerPort());
+			ssh.startProcess(users.get(i), configuration.getServer().getIp(),
+					configuration.getPort());
+
+		// Start Server
+		// User server = new User(ip, userName, password, filePath)
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
@@ -57,13 +60,15 @@ public class Start {
 			line = in.nextLine();
 
 			String[] configData = line.split("=");
+			User server = new User();
 			switch (configData[0]) {
 			case SERVER_IP:
-				configuration.setServerIp(configData[1].trim());
+				server.setIp(configData[1].trim());
 				break;
 			case SERVER_PORT:
-				configuration.setServerPort(Integer.parseInt(configData[1]
-						.trim()));
+				configuration.setPort(Integer.parseInt(configData[1].trim()));
+				readServerData(in, server);
+				configuration.setServer(server);
 				break;
 			case NUMBER_OF_READERS:
 				int numOfReaders = Integer.parseInt(configData[1].trim());
@@ -82,6 +87,35 @@ public class Start {
 		}
 		in.close();
 		return configuration;
+	}
+
+	private static void readServerData(Scanner in, User server) {
+		String line = "";
+		String[] configData;
+
+		// User name
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String userName = configData[1].trim();
+		server.setUserName(userName);
+
+		// Password
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String password = configData[1].trim();
+		server.setPassword(password);
+
+		// File Path
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String filePath = configData[1].trim();
+		server.setFilePath(filePath);
 	}
 
 	private static void readUserData(Scanner in, Configuration configuration) {
@@ -115,7 +149,7 @@ public class Start {
 		line = in.nextLine();
 		configData = line.split("=");
 		String filePath = configData[1].trim();
-		
+
 		configuration.addUser(new User(ip, userName, password, filePath));
 	}
 

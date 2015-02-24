@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 import ssh.User;
@@ -12,31 +11,23 @@ import ssh.User;
 public class Configuration {
 
 	// Server information
-	private String serverIp;
-	private int serverPort;
-
+	private User server;
+	private int port;
 	private ArrayList<User> users;
 
 	private int numberOfAccesses;
 
 	public Configuration() {
 		users = new ArrayList<User>();
+		server = new User();
 	}
 
-	public String getServerIp() {
-		return serverIp;
+	public void setServer(User server) {
+		this.server = server;
 	}
 
-	public void setServerIp(String serverIp) {
-		this.serverIp = serverIp;
-	}
-
-	public int getServerPort() {
-		return serverPort;
-	}
-
-	public void setServerPort(int serverPort) {
-		this.serverPort = serverPort;
+	public User getServer() {
+		return server;
 	}
 
 	public void addUser(User user) {
@@ -53,5 +44,13 @@ public class Configuration {
 
 	public void setNumberOfAccesses(int numberOfAccesses) {
 		this.numberOfAccesses = numberOfAccesses;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
 	}
 }
