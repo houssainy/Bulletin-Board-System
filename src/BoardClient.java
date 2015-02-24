@@ -1,4 +1,4 @@
-package main_package;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -15,13 +15,15 @@ public class BoardClient {
 	private static MessageOperator msgOperator;
 
 	public static void main(String[] args) {
-//		if (args == null || args.length < 2) {
-//			System.err.println("ERROR: Missing Arguments!");
-//			return;
-//		}
+		if (args == null || args.length < 2) {
+			System.err.println("ERROR: Missing Arguments!");
+			return;
+		}
 
-		String serverIp = "127.0.0.1";//args[0];
-		int serverPort = 1992;//Integer.parseInt(args[1].trim());
+		//String serverIp = "127.0.0.1";//args[0];
+		String serverIp = args[0];
+//		int serverPort = 1992;//Integer.parseInt(args[1].trim());
+		int serverPort = Integer.parseInt(args[1].trim());
 
 		// Connect to Server
 		Client client = new Client(serverIp, serverPort);

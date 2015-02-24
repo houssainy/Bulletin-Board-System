@@ -1,4 +1,4 @@
-package main_package;
+
 import java.util.ArrayList;
 
 import ssh.User;

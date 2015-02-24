@@ -1,4 +1,4 @@
-package main_package;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

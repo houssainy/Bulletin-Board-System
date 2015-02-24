@@ -1,4 +1,4 @@
-package main_package;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +28,8 @@ public class BoardServer {
 	private static int sequenceNumber;
 
 	private static MessageOperator msgOperator;
-
+	
+	private Log log;
 	/**
 	 * Main function of the server.
 	 * 
