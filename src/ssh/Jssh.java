@@ -1,24 +1,34 @@
 package ssh;
 
 import com.jcraft.jsch.*;
+
 import java.io.*;
 
 public class Jssh {
+	
+	public Jssh(){
+		
+	}
+	
+//	public static void main(String[] args) {
+//		User user = new User("127.0.0.1", "mohamedsaad", "7192", "test");
+//		startProcess(user);
+//	}
 
-	public void startProcess(final User currentUser) {
+	public  void startProcess(final User currentUser,final String serverIp, final int portNumber) {
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				performShell(currentUser, "javac ");// for build
-				performShell(currentUser, "java ");// for run
+				performShell(currentUser,serverIp,portNumber, "javac ");// for build
+				performShell(currentUser,serverIp,portNumber, "java ");// for run
 
 			}
 		}).start();
 
 	}
 
-	private void performShell(final User currentUser, String commandType) {
+	private void performShell(final User currentUser, String commandType, int portNumber, String serverIp) {
 		try {
 
 			JSch jsch = new JSch();
@@ -29,9 +39,11 @@ public class Jssh {
 			session.connect();
 			String command = "";
 			if (commandType.equals("javac ")) {
-				command = "javac " + currentUser.getFilePath();
+				command = "javac Desktop/" + currentUser.getFilePath()+".java";
 			} else {
-				command = "java " + currentUser.getFilePath();
+				//command = "java " + currentUser.getFilePath();
+				
+				command = "cd Desktop/;java "+currentUser.getFilePath()+ " "+ serverIp + " " + portNumber;
 			}
 
 			Channel channel = session.openChannel("exec");
@@ -52,13 +64,14 @@ public class Jssh {
 				if (channel.isClosed()) {
 					if (in.available() > 0)
 						continue;
-					System.out.println(Thread.currentThread());
+					System.out.println(commandType);
 					System.out.println("exit-status: "
 							+ channel.getExitStatus());
 					break;
 				}
 				try {
 					Thread.sleep(1000);
+
 				} catch (Exception ee) {
 				}
 			}
