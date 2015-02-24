@@ -41,9 +41,9 @@ public class Start {
 		Jssh ssh = new Jssh();
 
 		// Start Server
-//		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
-//				configuration.getPort());
-		
+		ssh.startProcess(configuration.getServer(), configuration.getServer()
+				.getIp(), configuration.getPort());
+
 		ArrayList<User> users = configuration.getUsersList();
 
 		for (int i = 0; i < users.size(); i++)
@@ -59,7 +59,7 @@ public class Start {
 		Scanner in = new Scanner(new File(filePath));
 
 		String line = "";
-		User server = new User();
+		User server = new User(User.SERVER_TYPE);
 		while (in.hasNext()) {
 			line = in.nextLine();
 
@@ -154,7 +154,8 @@ public class Start {
 		configData = line.split("=");
 		String filePath = configData[1].trim();
 
-		configuration.addUser(new User(ip, userName, password, filePath));
+		configuration.addUser(new User(ip, userName, password, filePath,
+				User.CLIENT_TYPE));
 	}
 
 }

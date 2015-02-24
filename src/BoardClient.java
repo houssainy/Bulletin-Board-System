@@ -29,8 +29,8 @@ public class BoardClient {
 
 		// Connect to Server
 		Client client = new Client(serverIp, serverPort);
-		System.out.println("Connected to Server " + serverIp + " on port "
-				+ serverPort);
+//		System.out.println("Connected to Server " + serverIp + " on port "
+//				+ serverPort);
 
 		int input = 0;
 		msgOperator = new MessageOperator();
