@@ -39,11 +39,10 @@ public class Jssh {
 			session.connect();
 			String command = "";
 			if (commandType.equals("javac ")) {
-				command = "javac Desktop/" + currentUser.getFilePath()+".java";
+				command = "cd Desktop/project/src;javac " + "BoardClient"+".java";
 			} else {
 				//command = "java " + currentUser.getFilePath();
-				
-				command = "cd Desktop/;java "+currentUser.getFilePath()+ " "+ serverIp + " " + portNumber;
+				command = "cd Desktop/project/src;java "+currentUser.getFilePath()+ " "+ serverIp + " " + portNumber;
 			}
 
 			Channel channel = session.openChannel("exec");
