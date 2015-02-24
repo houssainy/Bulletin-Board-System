@@ -40,15 +40,15 @@ public class Start {
 	private static void startNetwork(Configuration configuration) {
 		Jssh ssh = new Jssh();
 
+		// Start Server
+		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
+				configuration.getPort());
+		
 		ArrayList<User> users = configuration.getUsersList();
 
 		for (int i = 0; i < users.size(); i++)
 			ssh.startProcess(users.get(i), configuration.getServer().getIp(),
 					configuration.getPort());
-
-		// Start Server
-		ssh.startProcess(configuration.getServer(), configuration.getServer().getIp(),
-				configuration.getPort());
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
