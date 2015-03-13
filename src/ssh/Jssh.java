@@ -5,47 +5,45 @@ import com.jcraft.jsch.*;
 import java.io.*;
 
 public class Jssh {
-	
-	public Jssh(){
-		
+	private JSch jsch;
+
+	public Jssh(String userName, String ip, String password) {
+		jsch = new JSch();
+		Session session = jsch.getSession(currentUser.getUserName(),
+				currentUser.getIp(), 22);
+		session.setPassword(currentUser.getPassword());
+		session.setConfig("StrictHostKeyChecking", "no");
+		session.connect();
 	}
-	
-//	public static void main(String[] args) {
-//		User user = new User("127.0.0.1", "mohamedsaad", "7192", "test");
-//		startProcess(user);
-//	}
 
-	public  void startProcess(final User currentUser,final String serverIp, final int portNumber) {
+	public void startProcess(final User currentUser, final String serverIp,
+			final int portNumber) {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
-				performShell(currentUser,serverIp,portNumber, "javac ");// for build
-				performShell(currentUser,serverIp,portNumber, "java ");// for run
-
+				performShell(currentUser, serverIp, portNumber, "javac ");
+				performShell(currentUser, serverIp, portNumber, "java ");
 			}
 		}).start();
-
 	}
 
-	private void performShell(final User currentUser, String serverIp, int portNumber,String commandType ) {
+	private void performShell(final User currentUser, String serverIp,
+			int portNumber, String commandType) {
 		try {
-
-			JSch jsch = new JSch();
-			Session session = jsch.getSession(currentUser.getUserName(),
-					currentUser.getIp(), 22);
-			session.setPassword(currentUser.getPassword());
-			session.setConfig("StrictHostKeyChecking", "no");
-			session.connect();
 			String command = "";
 			if (commandType.equals("javac ")) {
-				command = "cd Desktop/project/src;javac " + currentUser.getFilePath()+".java";
+				command = "cd Desktop/project/src;javac "
+						+ currentUser.getFilePath() + ".java";
 			} else {
-				//command = "java " + currentUser.getFilePath();
+				// command = "java " + currentUser.getFilePath();
 				if (currentUser.getType().equals(User.SERVER_TYPE))
-					command = "cd Desktop/project/src;java "+currentUser.getFilePath()+ " "+ portNumber + " " + 20;
+					command = "cd Desktop/project/src;java "
+							+ currentUser.getFilePath() + " " + portNumber
+							+ " " + 20;
 				else
-					command = "cd Desktop/project/src;java "+currentUser.getFilePath()+ " "+ serverIp + " " + portNumber;
+					command = "cd Desktop/project/src;java "
+							+ currentUser.getFilePath() + " " + serverIp + " "
+							+ portNumber;
 			}
 
 			Channel channel = session.openChannel("exec");
