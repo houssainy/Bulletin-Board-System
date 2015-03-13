@@ -1,6 +1,3 @@
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -16,33 +13,21 @@ public class BoardClient {
 
 	private static MessageOperator msgOperator;
 
-//	private static Log log;
 	public static void main(String[] args) {
 		if (args == null || args.length < 2) {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
-		
-//		log = new Log("logeeeeeeeeeeeeeee.txt");
-		//String serverIp = "172.16.8.81";//args[0];
+
 		String serverIp = args[0];
-		//int serverPort = 8007;//Integer.parseInt(args[1].trim());
 		int serverPort = Integer.parseInt(args[1].trim());
 
 		// Connect to Server
 		Client client = new Client(serverIp, serverPort);
-//		System.out.println("Connected to Server " + serverIp + " on port "
-//				+ serverPort);
 
 		int input = 0;
 		msgOperator = new MessageOperator();
-		Scanner in = null;
-		try {
-			in = new Scanner(new File("clientCommands.txt"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		Scanner in = new Scanner(System.in);
 
 		boolean done = false;
 		try {
@@ -66,7 +51,7 @@ public class BoardClient {
 			} while (!done);
 
 			client.close();
-//			log.close();
+			// log.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,7 +66,7 @@ public class BoardClient {
 	 */
 	private static boolean writeDataToServer(Scanner in, Client client) {
 		// Read file path
-//		log.log("I am writing");
+		// log.log("I am writing");
 		System.out.println("Enter file path in server's device:");
 		String filePath = in.next();
 
@@ -114,7 +99,7 @@ public class BoardClient {
 	 */
 	private static boolean readFileFromServer(Scanner in, Client client)
 			throws IOException {
-//		log.log("I am Reading\n");
+		// log.log("I am Reading\n");
 		// Read file path
 		System.out.println("Enter file path in server's device:");
 		String filePath = in.next();
@@ -134,7 +119,7 @@ public class BoardClient {
 				"UTF-8"));
 		if (response.getType().equals(MessageOperator.READ_RESPONSE)) {
 			System.out.println("Server >\n" + response.getData());
-//			log.log("Data Received: " + response.getData());
+			// log.log("Data Received: " + response.getData());
 			return true;
 		} else if (response.getType().equals(
 				MessageOperator.MAX_ACCESS_RESPONSE)) {

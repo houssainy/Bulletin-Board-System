@@ -5,81 +5,46 @@ import com.jcraft.jsch.*;
 import java.io.*;
 
 public class Jssh {
-	private JSch jsch;
 
-	public Jssh(String userName, String ip, String password) {
-		jsch = new JSch();
-		Session session = jsch.getSession(currentUser.getUserName(),
-				currentUser.getIp(), 22);
-		session.setPassword(currentUser.getPassword());
-		session.setConfig("StrictHostKeyChecking", "no");
-		session.connect();
-	}
-
-	public void startProcess(final User currentUser, final String serverIp,
-			final int portNumber) {
+	public void doCommand(final String userName, final String ip,
+			final String password, final String command) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				performShell(currentUser, serverIp, portNumber, "javac ");
-				performShell(currentUser, serverIp, portNumber, "java ");
+				try {
+					JSch jsch = new JSch();
+					Session session = jsch.getSession(userName, ip, 22);
+					session.setPassword(password);
+					session.setConfig("StrictHostKeyChecking", "no");
+					session.connect();
+
+					ChannelExec channel = (ChannelExec) session.openChannel("exec");
+					channel.setCommand(command);
+					channel.setErrStream(System.err);
+					channel.connect();
+					InputStream in = channel.getInputStream();
+
+					byte[] tmp = new byte[1024];
+					while (true) {
+						while (in.available() > 0) {
+							int i = in.read(tmp, 0, 1024);
+							if (i < 0)
+								break;
+							System.out.print(new String(tmp, 0, i));
+						}
+						if (channel.isClosed()) {
+							if (in.available() > 0)
+								continue;
+							System.out.println("exit-status: "
+									+ channel.getExitStatus());
+							break;
+						}
+					}
+					channel.disconnect();
+				} catch (IOException | JSchException e) {
+					e.printStackTrace();
+				}
 			}
 		}).start();
-	}
-
-	private void performShell(final User currentUser, String serverIp,
-			int portNumber, String commandType) {
-		try {
-			String command = "";
-			if (commandType.equals("javac ")) {
-				command = "cd Desktop/project/src;javac "
-						+ currentUser.getFilePath() + ".java";
-			} else {
-				// command = "java " + currentUser.getFilePath();
-				if (currentUser.getType().equals(User.SERVER_TYPE))
-					command = "cd Desktop/project/src;java "
-							+ currentUser.getFilePath() + " " + portNumber
-							+ " " + 20;
-				else
-					command = "cd Desktop/project/src;java "
-							+ currentUser.getFilePath() + " " + serverIp + " "
-							+ portNumber;
-			}
-
-			Channel channel = session.openChannel("exec");
-			((ChannelExec) channel).setCommand(command);
-			channel.setInputStream(null);
-			((ChannelExec) channel).setErrStream(System.err);
-			InputStream in = channel.getInputStream();
-			channel.connect();
-
-			byte[] tmp = new byte[1024];
-			while (true) {
-				while (in.available() > 0) {
-					int i = in.read(tmp, 0, 1024);
-					if (i < 0)
-						break;
-					System.out.print(new String(tmp, 0, i));
-				}
-				if (channel.isClosed()) {
-					if (in.available() > 0)
-						continue;
-					System.out.println(commandType);
-					System.out.println("exit-status: "
-							+ channel.getExitStatus());
-					break;
-				}
-				try {
-					Thread.sleep(1000);
-
-				} catch (Exception ee) {
-				}
-			}
-			channel.disconnect();
-			session.disconnect();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
 	}
 }

@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.jws.Oneway;
@@ -37,18 +38,54 @@ public class Start {
 		}
 	}
 
+	/**
+	 * Start the remote server and remote client
+	 * 
+	 * @param configuration
+	 */
 	private static void startNetwork(Configuration configuration) {
 		Jssh ssh = new Jssh();
-
-		// Start Server
-		ssh.startProcess(configuration.getServer(), configuration.getServer()
-				.getIp(), configuration.getPort());
-
 		ArrayList<User> users = configuration.getUsersList();
 
-		for (int i = 0; i < users.size(); i++)
-			ssh.startProcess(users.get(i), configuration.getServer().getIp(),
-					configuration.getPort());
+		startUser(ssh, configuration, configuration.getServer());
+
+		try {
+			// Sleep period to insure that the server is running before the
+			// clients
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		for (Iterator<User> iterator = users.iterator(); iterator.hasNext();)
+			startUser(ssh, configuration, (User) iterator.next());
+	}
+
+	private static void startUser(Jssh ssh, Configuration configuration,
+			User user) {
+		String command = "export DISPLAY=:0.0 && gnome-terminal -x bash -c \"cd "
+				+ user.getFilePath()
+				+ " && javac "
+				+ user.getFileName()
+				+ ".java && java " + user.getFileName() + " ";
+		switch (user.getType()) {
+		case User.SERVER_TYPE:
+			command += configuration.getPort() + " "
+					+ configuration.getNumberOfAccesses();
+			break;
+		case User.CLIENT_WRITER_TYPE:
+			// command += configuration.getPort() + " "
+			// + configuration.getNumberOfAccesses();
+			break;
+		case User.CLIENT_READER_TYPE:
+			command += configuration.getServer().getIp() + " "
+					+ configuration.getPort();
+			break;
+		}
+		command += "\"";
+		System.out.println(command);
+		ssh.doCommand(user.getUserName(), user.getIp(), user.getPassword(),
+				command);
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
@@ -77,13 +114,13 @@ public class Start {
 			case NUMBER_OF_READERS:
 				int numOfReaders = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfReaders && in.hasNext(); i++)
-					readUserData(in, configuration);
+					readUserData(in, configuration, User.CLIENT_READER_TYPE);
 
 				break;
 			case NUMBER_OF_WRITERS:
 				int numOfWriters = Integer.parseInt(configData[1].trim());
 				for (int i = 0; i < numOfWriters && in.hasNext(); i++)
-					readUserData(in, configuration);
+					readUserData(in, configuration, User.CLIENT_WRITER_TYPE);
 				break;
 			default:
 				break;
@@ -122,7 +159,8 @@ public class Start {
 		server.setFilePath(filePath);
 	}
 
-	private static void readUserData(Scanner in, Configuration configuration) {
+	private static void readUserData(Scanner in, Configuration configuration,
+			String type) {
 		String line = "";
 		String[] configData;
 
@@ -154,8 +192,7 @@ public class Start {
 		configData = line.split("=");
 		String filePath = configData[1].trim();
 
-		configuration.addUser(new User(ip, userName, password, filePath,
-				User.CLIENT_TYPE));
+		configuration.addUser(new User(ip, userName, password, filePath, type));
 	}
 
 }

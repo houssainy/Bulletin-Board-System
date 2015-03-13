@@ -36,18 +36,16 @@ public class BoardServer {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		if (args == null || args.length < 2) {
-//			System.err.println("ERROR: Missing Arguments!");
-//			return;
-//		}
+		if (args == null || args.length < 2) {
+			System.err.println("ERROR: Missing Arguments!");
+			return;
+		}
 		sequenceNumber = 0;
 
 		msgOperator = new MessageOperator();
 
-		//int port = 8007;//
-		int port = 7003;//Integer.parseInt(args[0].trim());
-		//maxNumberOfAccess = 20;//
-		maxNumberOfAccess = 20;//Integer.parseInt(args[1].trim());
+		int port = Integer.parseInt(args[0].trim());
+		maxNumberOfAccess = Integer.parseInt(args[1].trim());
 		Server server = new Server();
 		server.setListner(clientListner);
 		server.start(port);
