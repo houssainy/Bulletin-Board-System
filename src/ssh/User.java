@@ -2,8 +2,8 @@ package ssh;
 
 public class User {
 	public static final String SERVER_TYPE = "SERVER_TYPE";
-	public static final String CLIENT_READER_TYPE = "client_reader_TYPE";
-	public static final String CLIENT_WRITER_TYPE = "client_writer_TYPE";
+	public static final String CLIENT_READER_TYPE = "client_reader";
+	public static final String CLIENT_WRITER_TYPE = "client_writer";
 
 	private String ip;
 	private String userName;

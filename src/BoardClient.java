@@ -2,13 +2,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import ssh.User;
-
 import communication_package.Client;
 
 public class BoardClient {
 	private static final int READ_FILE = 1;
-	private static final int WRITE_FILE = 2;
-	private static final int CLOSE = 3;
+	private static final int WRITE_FILE = 1;
+	private static final int CLOSE = 2;
 
 	public static void main(String[] args) {
 		if (args == null || args.length < 3) {
@@ -19,16 +18,18 @@ public class BoardClient {
 		String serverIp = args[0];
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
-
-		// Connect to Server
-		Client client = new Client(serverIp, serverPort);
-
-		if (type.equals(User.CLIENT_READER_TYPE))
-			startReader(client);
-		else if (type.equals(User.CLIENT_WRITER_TYPE))
-			startWriter(client);
-
 		try {
+			// Connect to Server
+			Client client = new Client(serverIp, serverPort);
+			byte[] idData = client.receive();
+			client.setClientId(Integer.parseInt(new String(idData, "UTF-8")));
+			
+			if (type.equals(User.CLIENT_READER_TYPE))
+				startReader(client);
+			else if (type.equals(User.CLIENT_WRITER_TYPE))
+				startWriter(client);
+			
+			client.send("bye".getBytes());
 			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -36,7 +37,7 @@ public class BoardClient {
 		System.out.println("Closed ...");
 	}
 
-	private static void startWriter(Client client) {
+	private static void startReader(Client client) {
 		int input = 0;
 		Scanner in = new Scanner(System.in);
 
@@ -50,7 +51,7 @@ public class BoardClient {
 
 				switch (input) {
 				case READ_FILE:
-					readValueFromServer(in, client);
+					done = readValueFromServer(in, client);
 					break;
 				case CLOSE:
 					done = true;
@@ -58,6 +59,7 @@ public class BoardClient {
 				default:
 					System.out.println("Invalid input!");
 				}
+				System.out.println("... ... ...");
 				Thread.sleep(1000);
 			} while (!done);
 		} catch (InterruptedException | IOException e) {
@@ -66,7 +68,7 @@ public class BoardClient {
 
 	}
 
-	private static void startReader(Client client) {
+	private static void startWriter(Client client) {
 		int input = 0;
 		Scanner in = new Scanner(System.in);
 
@@ -74,7 +76,7 @@ public class BoardClient {
 		try {
 			do {
 				System.out
-						.println("Chose one of the following actions:\n\n1: Post Data to server.\n3: close.");
+						.println("Chose one of the following actions:\n\n1: Update Bulletin Value.\n2: close.");
 				// Read input from user
 				input = in.nextInt();
 
@@ -88,6 +90,7 @@ public class BoardClient {
 				default:
 					System.out.println("Invalid input!");
 				}
+				System.out.println("... ... ...");
 				Thread.sleep(1000);
 			} while (!done);
 		} catch (InterruptedException | IOException e) {
@@ -132,7 +135,7 @@ public class BoardClient {
 	 * @return true on success
 	 * @throws IOException
 	 */
-	private static void readValueFromServer(Scanner in, Client client)
+	private static boolean readValueFromServer(Scanner in, Client client)
 			throws IOException {
 		client.send("read".getBytes());
 
@@ -140,16 +143,18 @@ public class BoardClient {
 		byte[] respData = client.receive();
 		if (respData == null) {
 			System.err.println("ERROR: Server is down!");
-			return;
+			return false;
 		}
 
-		String resp = new String(respData);
+		String resp = new String(respData, "UTF-8");
 		if (resp.equals("MAX_ACC")) {
 			System.out.println("You reached the maximum number of access!");
+			return false;
 			// TODO(houssainy) LOG
 		} else {
 			System.out.println("Value = " + resp);
 			// TODO(houssainy) LOG
 		}
+		return true;
 	}
 }
