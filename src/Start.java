@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import javax.jws.Oneway;
-
 import ssh.Jssh;
 import ssh.User;
 
@@ -74,12 +72,12 @@ public class Start {
 					+ configuration.getNumberOfAccesses();
 			break;
 		case User.CLIENT_WRITER_TYPE:
-			// command += configuration.getPort() + " "
-			// + configuration.getNumberOfAccesses();
+			command += configuration.getServer().getIp() + " "
+					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE;
 			break;
 		case User.CLIENT_READER_TYPE:
 			command += configuration.getServer().getIp() + " "
-					+ configuration.getPort();
+					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
 		}
 		command += "\"";
