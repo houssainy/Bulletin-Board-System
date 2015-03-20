@@ -62,7 +62,7 @@ public class Start {
 
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
-		String command = "export DISPLAY=:0.0 && xterm -e \"cd "
+		String command = "export DISPLAY=:13.0 && xterm -e \"cd "
 				+ user.getFilePath() + " && javac " + user.getFileName()
 				+ ".java && java " + user.getFileName() + " ";
 		switch (user.getType()) {
