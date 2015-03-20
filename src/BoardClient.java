@@ -52,7 +52,7 @@ public class BoardClient {
 
 				switch (input) {
 				case READ_FILE:
-					done = readValueFromServer(in, client);
+					done = !readValueFromServer(in, client);
 					break;
 				case CLOSE:
 					done = true;

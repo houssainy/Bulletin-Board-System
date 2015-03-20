@@ -21,6 +21,7 @@ public class Start {
 	private static final String SERVER_PORT = "RW.server.port";
 	private static final String NUMBER_OF_READERS = "RW.numberOfReaders";
 	private static final String NUMBER_OF_WRITERS = "RW.numberOfWriters";
+	private static final String NUMBER_OF_ACCESS = "RW.numberOfAccesses";
 
 	public static void main(String[] args) {
 		try {
@@ -61,7 +62,7 @@ public class Start {
 
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
-		String command = "export DISPLAY=:0.0 && gnome-terminal -x bash -c \"cd "
+		String command = "export DISPLAY=:0.0 && xterm -e \"cd "
 				+ user.getFilePath()
 				+ " && javac "
 				+ user.getFileName()
@@ -83,7 +84,7 @@ public class Start {
 		command += "\"";
 		System.out.println(command);
 		ssh.doCommand(user.getUserName(), user.getIp(), user.getPassword(),
-				command, "127.0.0.1");
+				command);
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
@@ -120,6 +121,8 @@ public class Start {
 				for (int i = 0; i < numOfWriters && in.hasNext(); i++)
 					readUserData(in, configuration, User.CLIENT_WRITER_TYPE);
 				break;
+			case NUMBER_OF_ACCESS:
+				configuration.setNumberOfAccesses(Integer.parseInt(configData[1].trim()));
 			default:
 				break;
 			}
