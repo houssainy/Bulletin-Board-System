@@ -1,8 +1,9 @@
+package socket_implementation;
 import java.io.IOException;
 import java.util.Scanner;
 
+import socket_implementation.communication_package.Client;
 import ssh.User;
-import communication_package.Client;
 
 public class BoardClient {
 	private static final int READ_FILE = 1;
@@ -19,8 +20,10 @@ public class BoardClient {
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
 		try {
+			System.out.println("Starting Client...");
 			// Connect to Server
 			Client client = new Client(serverIp, serverPort);
+			System.out.println("Connected!");
 			byte[] idData = client.receive();
 			client.setClientId(Integer.parseInt(new String(idData, "UTF-8")));
 

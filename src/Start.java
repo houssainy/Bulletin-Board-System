@@ -51,7 +51,7 @@ public class Start {
 		try {
 			// Sleep period to insure that the server is running before the
 			// clients
-			Thread.sleep(1000);
+			Thread.sleep(7000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -67,6 +67,7 @@ public class Start {
 				+ ".java && java " + user.getFileName() + " ";
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
+			command = "export DISPLAY=:14.0 && " + command;
 			command += configuration.getPort() + " "
 					+ configuration.getNumberOfAccesses();
 			break;

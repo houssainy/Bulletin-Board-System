@@ -1,4 +1,4 @@
-package communication_package;
+package socket_implementation.communication_package;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

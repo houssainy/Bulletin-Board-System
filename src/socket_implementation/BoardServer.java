@@ -1,12 +1,13 @@
+package socket_implementation;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-import communication_package.Client;
-import communication_package.Server;
-import communication_package.Server.TCPClientListner;
+import socket_implementation.communication_package.Client;
+import socket_implementation.communication_package.Server;
+import socket_implementation.communication_package.Server.TCPClientListner;
 
 /**
  * 
