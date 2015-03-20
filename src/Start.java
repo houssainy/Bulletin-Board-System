@@ -83,7 +83,7 @@ public class Start {
 		command += "\"";
 		System.out.println(command);
 		ssh.doCommand(user.getUserName(), user.getIp(), user.getPassword(),
-				command);
+				command, "127.0.0.1");
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in

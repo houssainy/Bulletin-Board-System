@@ -23,12 +23,13 @@ public class BoardClient {
 			Client client = new Client(serverIp, serverPort);
 			byte[] idData = client.receive();
 			client.setClientId(Integer.parseInt(new String(idData, "UTF-8")));
-			
+
+			System.out.println("Welcome client " + client.getClientId());
 			if (type.equals(User.CLIENT_READER_TYPE))
 				startReader(client);
 			else if (type.equals(User.CLIENT_WRITER_TYPE))
 				startWriter(client);
-			
+
 			client.send("bye".getBytes());
 			client.close();
 		} catch (IOException e) {

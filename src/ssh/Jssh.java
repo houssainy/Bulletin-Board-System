@@ -7,7 +7,7 @@ import java.io.*;
 public class Jssh {
 
 	public void doCommand(final String userName, final String ip,
-			final String password, final String command) {
+			final String password, final String command, final String x11Host) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -16,6 +16,10 @@ public class Jssh {
 					Session session = jsch.getSession(userName, ip, 22);
 					session.setPassword(password);
 					session.setConfig("StrictHostKeyChecking", "no");
+					if(x11Host!= null){
+						session.setX11Host(x11Host);
+						session.setX11Port(6000);
+					}
 					session.connect();
 
 					ChannelExec channel = (ChannelExec) session.openChannel("exec");
