@@ -16,6 +16,8 @@ public class Jssh {
 					Session session = jsch.getSession(userName, ip, port);
 					session.setPassword(password);
 					session.setConfig("StrictHostKeyChecking", "no");
+					session.setX11Host(ip);
+					session.setX11Port(6000);
 					session.connect();
 
 					ChannelExec channel = (ChannelExec) session.openChannel("exec");

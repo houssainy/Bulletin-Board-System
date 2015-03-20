@@ -62,7 +62,7 @@ public class Start {
 
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
-		String command = "export DISPLAY=:13.0 && xterm -e \"cd "
+		String command = "xterm -e \"cd "
 				+ user.getFilePath() + " && javac " + user.getFileName()
 				+ ".java && java " + user.getFileName() + " ";
 		switch (user.getType()) {
@@ -71,10 +71,12 @@ public class Start {
 					+ configuration.getNumberOfAccesses();
 			break;
 		case User.CLIENT_WRITER_TYPE:
+			command = "export DISPLAY=:0.0 && " + command;
 			command += configuration.getServer().getIp() + " "
 					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE;
 			break;
 		case User.CLIENT_READER_TYPE:
+			command = "export DISPLAY=:0.0 && " + command;
 			command += configuration.getServer().getIp() + " "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
