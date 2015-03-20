@@ -11,18 +11,21 @@ public class User {
 	private String filePath;
 	private String fileName;
 	private String type;
+	private int sshPort = 22;
 
 	public User(String type) {
 		this.setType(type);
 	}
 
-	public User(String ip, String userName, String password, String filePath,
-			String type) {
+	public User(String ip, String userName, String password, int sshPort,
+			String filePath, String type) {
 		this.setIp(ip);
 		this.setUserName(userName);
 		this.setPassword(password);
+		this.setSshPort(sshPort);
 		this.setFilePath(filePath);
 		this.setType(type);
+
 	}
 
 	public String getIp() {
@@ -73,5 +76,13 @@ public class User {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public int getSshPort() {
+		return sshPort;
+	}
+
+	public void setSshPort(int sshPort) {
+		this.sshPort = sshPort;
 	}
 }

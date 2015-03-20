@@ -63,9 +63,7 @@ public class Start {
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
 		String command = "export DISPLAY=:0.0 && xterm -e \"cd "
-				+ user.getFilePath()
-				+ " && javac "
-				+ user.getFileName()
+				+ user.getFilePath() + " && javac " + user.getFileName()
 				+ ".java && java " + user.getFileName() + " ";
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
@@ -83,8 +81,8 @@ public class Start {
 		}
 		command += "\"";
 		System.out.println(command);
-		ssh.doCommand(user.getUserName(), user.getIp(), user.getPassword(),
-				command);
+		ssh.doCommand(user.getUserName(), user.getIp(), user.getSshPort(),
+				user.getPassword(), command);
 	}
 
 	// Read system properties file, parse it and return the data encapsulated in
@@ -122,7 +120,8 @@ public class Start {
 					readUserData(in, configuration, User.CLIENT_WRITER_TYPE);
 				break;
 			case NUMBER_OF_ACCESS:
-				configuration.setNumberOfAccesses(Integer.parseInt(configData[1].trim()));
+				configuration.setNumberOfAccesses(Integer
+						.parseInt(configData[1].trim()));
 			default:
 				break;
 			}
@@ -150,6 +149,14 @@ public class Start {
 		configData = line.split("=");
 		String password = configData[1].trim();
 		server.setPassword(password);
+
+		// SSH port
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		String sshPort = configData[1].trim();
+		server.setSshPort(Integer.parseInt(sshPort));
 
 		// File Path
 		if (!in.hasNext())
@@ -186,6 +193,13 @@ public class Start {
 		configData = line.split("=");
 		String password = configData[1].trim();
 
+		// SSH port
+		if (!in.hasNext())
+			return;
+		line = in.nextLine();
+		configData = line.split("=");
+		int sshPort = Integer.parseInt(configData[1].trim());
+
 		// File Path
 		if (!in.hasNext())
 			return;
@@ -193,7 +207,8 @@ public class Start {
 		configData = line.split("=");
 		String filePath = configData[1].trim();
 
-		configuration.addUser(new User(ip, userName, password, filePath, type));
+		configuration.addUser(new User(ip, userName, password, sshPort,
+				filePath, type));
 	}
 
 }

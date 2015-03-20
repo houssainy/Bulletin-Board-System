@@ -6,14 +6,14 @@ import java.io.*;
 
 public class Jssh {
 
-	public void doCommand(final String userName, final String ip,
+	public void doCommand(final String userName, final String ip, final int port,
 			final String password, final String command) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					JSch jsch = new JSch();
-					Session session = jsch.getSession(userName, ip, 22);
+					Session session = jsch.getSession(userName, ip, port);
 					session.setPassword(password);
 					session.setConfig("StrictHostKeyChecking", "no");
 					session.connect();
