@@ -23,7 +23,7 @@ public class Client {
 		String serverIp = args[0];
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
-		
+		System.out.println("Trying to start client...");
 //		System.setProperty("java.rmi.server.hostname", serverIp);
 		try {
 			String name = "Board";
