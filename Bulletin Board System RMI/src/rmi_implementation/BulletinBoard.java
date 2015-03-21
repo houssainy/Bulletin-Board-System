@@ -43,7 +43,7 @@ public class BulletinBoard extends UnicastRemoteObject implements Board {
 
 		int serverPort = Integer.parseInt(args[0].trim());
 
-		System.setProperty("java.rmi.server.useLocalHostname", "true");
+//		System.setProperty("java.rmi.server.useLocalHostname", "true");
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
