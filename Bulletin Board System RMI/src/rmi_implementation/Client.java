@@ -15,8 +15,7 @@ public class Client {
 	private static final int CLOSE = 2;
 
 	public static void main(String args[]) {
-		System.out.println(args);
-		if (args == null || args.length < 4) {
+		if (args == null || args.length < 3) {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
