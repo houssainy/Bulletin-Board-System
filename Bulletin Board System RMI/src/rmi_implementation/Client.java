@@ -24,7 +24,7 @@ public class Client {
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
 		
-		System.setProperty("java.rmi.server.hostname", "<<100.75.6.18>>");
+		System.setProperty("java.rmi.server.hostname", serverIp);
 		try {
 			String name = "Board";
 			System.out.println(serverIp);
