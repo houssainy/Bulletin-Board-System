@@ -15,11 +15,12 @@ public class Client {
 	private static final int CLOSE = 2;
 
 	public static void main(String args[]) {
-		if (args == null || args.length < 3) {
+		System.out.println(args);
+		if (args == null || args.length < 4) {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
-System.out.println(args);
+		
 		String serverIp = args[0];
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
