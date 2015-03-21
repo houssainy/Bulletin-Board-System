@@ -43,10 +43,11 @@ public class BulletinBoard extends UnicastRemoteObject implements Board {
 
 		int serverPort = Integer.parseInt(args[0].trim());
 
+		System.setProperty("java.rmi.server.useLocalHostname", "true");
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
-//			Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
+			// Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
 			Registry registry = LocateRegistry.createRegistry(serverPort);
 			System.out.println("Registry used is " + registry);
 			registry.rebind(name, board);
