@@ -5,7 +5,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-
 /**
  * 
  * @author houssainy
@@ -15,11 +14,21 @@ import java.rmi.server.UnicastRemoteObject;
  *         Reference:
  *         http://docs.oracle.com/javase/tutorial/rmi/implementing.html
  */
-public class BulletinBoard implements Board {
+public class BulletinBoard extends UnicastRemoteObject implements Board {
 
-	public BulletinBoard() {
+	protected BulletinBoard() throws RemoteException {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// public BulletinBoard() {
+	// // super();
+	// }
 
 	@Override
 	public <T> T executeTask(Task<T> t) throws RemoteException {
@@ -37,10 +46,10 @@ public class BulletinBoard implements Board {
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
-			Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
+//			Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
 			Registry registry = LocateRegistry.createRegistry(serverPort);
 			System.out.println("Registry used is " + registry);
-			registry.rebind(name, stub);
+			registry.rebind(name, board);
 
 			System.out.println("Bullitin Board Started ...");
 		} catch (Exception e) {
