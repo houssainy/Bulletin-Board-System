@@ -57,6 +57,7 @@ public class Client {
 
 				switch (input) {
 				case READ_FILE:
+					System.out.println(board);
 					String value = board.executeTask(new ReadTask());
 					System.out.println("Value = " + value);
 					break;
