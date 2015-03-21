@@ -36,14 +36,15 @@ public class BulletinBoard extends UnicastRemoteObject implements Board {
 	}
 
 	public static void main(String[] args) {
-		if (args == null || args.length < 1) {
+		if (args == null || args.length < 2) {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
 
 		int serverPort = Integer.parseInt(args[0].trim());
-
-//		System.setProperty("java.rmi.server.useLocalHostname", "true");
+		String registryIp = args[1].trim();
+		
+		System.setProperty("java.rmi.server.hostname", registryIp);
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
