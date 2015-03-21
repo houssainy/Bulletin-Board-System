@@ -1,8 +1,9 @@
-package socket_implementation;
+
 import java.io.IOException;
 import java.util.Scanner;
 
-import socket_implementation.communication_package.Client;
+import communication_package.Client;
+
 import ssh.User;
 
 public class BoardClient {
@@ -55,7 +56,7 @@ public class BoardClient {
 
 				switch (input) {
 				case READ_FILE:
-					done = !readValueFromServer(in, client);
+					done = !readValueFromServer(client);
 					break;
 				case CLOSE:
 					done = true;
@@ -139,7 +140,7 @@ public class BoardClient {
 	 * @return true on success
 	 * @throws IOException
 	 */
-	private static boolean readValueFromServer(Scanner in, Client client)
+	private static boolean readValueFromServer(Client client)
 			throws IOException {
 		client.send("read".getBytes());
 

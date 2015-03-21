@@ -1,4 +1,4 @@
-package socket_implementation.communication_package;
+package communication_package;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -30,7 +30,7 @@ public class Client {
 	public Client(String ip, int port) {
 		try {
 			socket = new Socket(InetAddress.getByName(ip), port);
-System.out.println("Connected to "+ip + "port " + port);
+			System.out.println("Connected to " + ip + "port " + port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
