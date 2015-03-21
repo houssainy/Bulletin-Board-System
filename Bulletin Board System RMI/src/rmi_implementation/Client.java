@@ -28,7 +28,7 @@ public class Client {
 			String name = "Board";
 			System.out.println("Locing for Registry ...");
 			Registry registry = LocateRegistry
-					.getRegistry(serverIp, serverPort);
+					.getRegistry(serverPort);
 			System.out.println("Locing for " + name + " in\n " + registry);
 			Board board = (Board) registry.lookup(name);
 			
