@@ -69,7 +69,7 @@ public class Start {
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
 			command = "export DISPLAY=:10.0 && " + command;
-			command += "100.75.6.18 "+configuration.getPort();
+			command += "100.75.6.18 " + configuration.getPort();
 			break;
 		case User.CLIENT_WRITER_TYPE:
 			command = "export DISPLAY=:0.0 && " + command;
@@ -78,7 +78,7 @@ public class Start {
 			break;
 		case User.CLIENT_READER_TYPE:
 			command = "export DISPLAY=:10.0 && " + command;
-			command += /*configuration.getServer().getIp() + */"100.75.6.18 "
+			command += /* configuration.getServer().getIp() + */"100.75.6.18 "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
 		}

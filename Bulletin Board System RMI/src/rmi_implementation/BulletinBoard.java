@@ -40,9 +40,8 @@ public class BulletinBoard extends UnicastRemoteObject implements Board {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
-
-		int serverPort = Integer.parseInt(args[0].trim());
-		String registryIp = args[1].trim();
+		String registryIp = args[0].trim();
+		int serverPort = Integer.parseInt(args[1].trim());
 		
 		System.setProperty("java.rmi.server.hostname", registryIp);
 		try {
