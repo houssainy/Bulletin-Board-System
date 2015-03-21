@@ -51,7 +51,7 @@ public class Start {
 		try {
 			// Sleep period to insure that the server is running before the
 			// clients
-			Thread.sleep(7000);
+			Thread.sleep(8000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -62,9 +62,10 @@ public class Start {
 
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
-		String command = "xterm -e \"cd "
-				+ user.getFilePath() + " && javac rmi_implementation/" + user.getFileName()
-				+ ".java && java rmi_implementation." + user.getFileName() + " ";
+		String command = "xterm -hold -e \"cd " + user.getFilePath()
+				+ " && javac rmi_implementation/" + user.getFileName()
+				+ ".java && java rmi_implementation." + user.getFileName()
+				+ " ";
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
 			command = "export DISPLAY=:12.0 && " + command;
@@ -76,8 +77,8 @@ public class Start {
 					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE;
 			break;
 		case User.CLIENT_READER_TYPE:
-			command = "export DISPLAY=:0.0 && " + command;
-			command += configuration.getServer().getIp() + " "
+			command = "export DISPLAY=:12.0 && " + command;
+			command += /*configuration.getServer().getIp()*/" 100.75.6.18 "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
 		}
