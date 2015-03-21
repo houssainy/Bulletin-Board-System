@@ -68,8 +68,7 @@ public class Start {
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
 			command = "export DISPLAY=:14.0 && " + command;
-			command += configuration.getPort() + " "
-					+ configuration.getNumberOfAccesses();
+			command += configuration.getPort();
 			break;
 		case User.CLIENT_WRITER_TYPE:
 			command = "export DISPLAY=:0.0 && " + command;

@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+
 /**
  * 
  * @author houssainy
@@ -26,11 +27,18 @@ public class BulletinBoard implements Board {
 	}
 
 	public static void main(String[] args) {
+		if (args == null || args.length < 1) {
+			System.err.println("ERROR: Missing Arguments!");
+			return;
+		}
+
+		int serverPort = Integer.parseInt(args[0].trim());
+
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
 			Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
-			Registry registry = LocateRegistry.createRegistry(8620);
+			Registry registry = LocateRegistry.createRegistry(serverPort);
 			registry.rebind(name, stub);
 
 			System.out.println("Bullitin Board Started ...");

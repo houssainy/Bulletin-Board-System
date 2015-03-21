@@ -15,17 +15,18 @@ public class Client {
 	private static final int CLOSE = 2;
 
 	public static void main(String args[]) {
-		if (args == null || args.length < 2) {
+		if (args == null || args.length < 3) {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
 
 		String serverIp = args[0];
-		String type = args[1].trim();
+		int serverPort = Integer.parseInt(args[1].trim());
+		String type = args[2].trim();
 
 		try {
 			String name = "Board";
-			Registry registry = LocateRegistry.getRegistry(serverIp, 8620);
+			Registry registry = LocateRegistry.getRegistry(serverIp, serverPort);
 			Board board = (Board) registry.lookup(name);
 
 			System.out.println("Starting Client...");
