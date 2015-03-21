@@ -37,8 +37,9 @@ public class BulletinBoard implements Board {
 		try {
 			String name = "Board";
 			BulletinBoard board = new BulletinBoard();
-			Board stub = (Board) UnicastRemoteObject.exportObject(board, 0);
+			Board stub = (Board) UnicastRemoteObject.exportObject(board);
 			Registry registry = LocateRegistry.createRegistry(serverPort);
+			System.out.println(registry);
 			registry.rebind(name, stub);
 
 			System.out.println("Bullitin Board Started ...");

@@ -27,6 +27,7 @@ public class Client {
 		try {
 			String name = "Board";
 			Registry registry = LocateRegistry.getRegistry(serverIp, serverPort);
+			System.out.println(registry);
 			Board board = (Board) registry.lookup(name);
 
 			System.out.println("Starting Client...");
@@ -57,7 +58,6 @@ public class Client {
 
 				switch (input) {
 				case READ_FILE:
-					System.out.println(board);
 					String value = board.executeTask(new ReadTask());
 					System.out.println("Value = " + value);
 					break;
