@@ -78,7 +78,7 @@ public class Start {
 			break;
 		case User.CLIENT_READER_TYPE:
 			command = "export DISPLAY=:12.0 && " + command;
-			command += configuration.getServer().getIp()
+			command += configuration.getServer().getIp() + " "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
 		}
