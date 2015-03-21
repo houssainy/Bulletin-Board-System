@@ -23,7 +23,7 @@ public class Client {
 		String serverIp = args[0];
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
-		// System.setProperty("java.rmi.server.hostname", serverIp);
+		 System.setProperty("java.rmi.server.hostname", serverIp);
 		try {
 			String name = "Board";
 			System.out.println("Locing for Registry ...");
