@@ -29,7 +29,7 @@ public class Client {
 			System.out.println("Locing for Registry ...");
 			Registry registry = LocateRegistry
 					.getRegistry(serverIp, serverPort);
-			System.out.println("Locing for " + name + "...");
+			System.out.println("Locing for " + name + " in\n " + registry);
 			Board board = (Board) registry.lookup(name);
 			
 			System.out.println("Starting Client...");
