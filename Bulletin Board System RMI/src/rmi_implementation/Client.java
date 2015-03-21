@@ -19,7 +19,7 @@ public class Client {
 			System.err.println("ERROR: Missing Arguments!");
 			return;
 		}
-
+System.out.println(args);
 		String serverIp = args[0];
 		int serverPort = Integer.parseInt(args[1].trim());
 		String type = args[2].trim();
