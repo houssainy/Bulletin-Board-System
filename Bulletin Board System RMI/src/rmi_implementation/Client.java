@@ -27,7 +27,7 @@ public class Client {
 		System.setProperty("java.rmi.server.hostname", serverIp);
 		try {
 			String name = "Board";
-			Registry registry = LocateRegistry.getRegistry(serverIp, 1099);
+			Registry registry = LocateRegistry.getRegistry(serverIp, serverPort);
 			Board board = (Board) registry.lookup(name);
 
 			System.out.println("Starting Client...");

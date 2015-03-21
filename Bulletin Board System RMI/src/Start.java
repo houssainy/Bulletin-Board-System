@@ -62,7 +62,7 @@ public class Start {
 
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
-		String command = "xterm -e \"cd " + user.getFilePath()
+		String command = "xterm -hold -e \"cd " + user.getFilePath()
 				+ " && javac rmi_implementation/" + user.getFileName()
 				+ ".java && java rmi_implementation." + user.getFileName()
 				+ " ";
