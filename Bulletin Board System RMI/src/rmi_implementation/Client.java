@@ -26,6 +26,7 @@ public class Client {
 
 		try {
 			String name = "Board";
+			System.out.println(serverIp);
 			Registry registry = LocateRegistry.getRegistry(serverIp, serverPort);
 			Board board = (Board) registry.lookup(name);
 
