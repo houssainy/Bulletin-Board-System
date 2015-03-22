@@ -14,9 +14,7 @@ public class Configuration {
 	private User server;
 	private int port;
 	private ArrayList<User> users;
-	
-	private String registryIp;
-	
+
 	private int numberOfAccesses;
 
 	public Configuration() {
@@ -53,14 +51,6 @@ public class Configuration {
 
 	public void setPort(int port) {
 		this.port = port;
-	}
-
-	public String getRegistryIp() {
-		return registryIp;
-	}
-
-	public void setRegistryIp(String registryIp) {
-		this.registryIp = registryIp;
 	}
 }
 

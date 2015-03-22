@@ -18,7 +18,6 @@ import ssh.User;
  */
 public class Start {
 	private static final String SERVER_IP = "RW.server";
-	private static final String REGISTRY_IP = "RW.registry";
 	private static final String SERVER_PORT = "RW.server.port";
 	private static final String NUMBER_OF_READERS = "RW.numberOfReaders";
 	private static final String NUMBER_OF_WRITERS = "RW.numberOfWriters";
@@ -70,17 +69,16 @@ public class Start {
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
 			command = "export DISPLAY=:13.0 && " + command;
-			command += configuration.getRegistryIp() + " "
-					+ configuration.getPort();
+			command += "100.75.6.18 " + configuration.getPort();
 			break;
 		case User.CLIENT_WRITER_TYPE:
 			command = "export DISPLAY=:0.0 && " + command;
-			command += configuration.getRegistryIp() + " "
+			command += configuration.getServer().getIp() + " "
 					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE;
 			break;
 		case User.CLIENT_READER_TYPE:
 			command = "export DISPLAY=:11.0 && " + command;
-			command += configuration.getRegistryIp() + " "
+			command += /* configuration.getServer().getIp() + */"100.75.6.18 "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
 			break;
 		}
@@ -107,9 +105,6 @@ public class Start {
 			switch (configData[0]) {
 			case SERVER_IP:
 				server.setIp(configData[1].trim());
-				break;
-			case REGISTRY_IP:
-				configuration.setRegistryIp(configData[1].trim());
 				break;
 			case SERVER_PORT:
 				configuration.setPort(Integer.parseInt(configData[1].trim()));
