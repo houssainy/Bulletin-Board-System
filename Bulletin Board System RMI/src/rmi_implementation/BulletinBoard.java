@@ -7,7 +7,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -104,11 +103,6 @@ public class BulletinBoard extends UnicastRemoteObject implements Board {
 
 		readWriteLock.writeLock().unlock();
 		// *** unLock ***
-
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("resp", "OK");
-		map.put("sSeq", sSeq + "");
-		map.put("wSeq", wSeq + "");
 
 		return new String("OK," + sSeq + "," + wSeq);
 	}

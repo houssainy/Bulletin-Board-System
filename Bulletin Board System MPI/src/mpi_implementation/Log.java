@@ -1,4 +1,4 @@
-
+package mpi_implementation;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,6 +31,15 @@ public class Log {
 		try {
 			br.close();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void flush() {
+		try {
+			br.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

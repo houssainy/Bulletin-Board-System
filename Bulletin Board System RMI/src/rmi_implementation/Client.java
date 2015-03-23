@@ -54,7 +54,7 @@ public class Client {
 	private static void startReader(Board board) {
 		log = new Log("log" + id + ".txt");
 		log.log("rSeq		sSeq	oVal\n");
-		log.log("-----------------------\n");
+		log.log("-----------------------------\n");
 
 		int input = 0;
 		Scanner in = new Scanner(System.in);
