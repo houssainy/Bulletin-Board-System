@@ -24,6 +24,8 @@ public class Start {
 	private static final String NUMBER_OF_WRITERS = "RW.numberOfWriters";
 	private static final String NUMBER_OF_ACCESS = "RW.numberOfAccesses";
 
+	private static int id = 1;
+
 	public static void main(String[] args) {
 		try {
 			Configuration config = readConfigurationFile("system.properties");
@@ -64,9 +66,7 @@ public class Start {
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
 		String command = "xterm -hold -e \"cd " + user.getFilePath()
-				+ " && javac rmi_implementation/" + user.getFileName()
-				+ ".java && java rmi_implementation." + user.getFileName()
-				+ " ";
+				+ " && java rmi_implementation." + user.getFileName() + " ";
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
 			command = "export DISPLAY=:13.0 && " + command;
@@ -76,12 +76,14 @@ public class Start {
 		case User.CLIENT_WRITER_TYPE:
 			command = "export DISPLAY=:0.0 && " + command;
 			command += configuration.getRegistryIp() + " "
-					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE;
+					+ configuration.getPort() + " " + User.CLIENT_WRITER_TYPE
+					+ " " + id++;
 			break;
 		case User.CLIENT_READER_TYPE:
 			command = "export DISPLAY=:11.0 && " + command;
 			command += configuration.getRegistryIp() + " "
-					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE;
+					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE
+					+ " " + id++;
 			break;
 		}
 		command += "\"";

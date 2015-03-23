@@ -1,3 +1,4 @@
+package rmi_implementation;
 
 
 import java.io.BufferedWriter;
@@ -30,6 +31,14 @@ public class Log {
 	public void close() {
 		try {
 			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void flush(){
+		try {
+			br.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
