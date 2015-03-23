@@ -9,6 +9,7 @@ class Hello {
 	static public void main(String[] args) throws MPIException {
 		MPI.Init(args);
 		int myrank = MPI.COMM_WORLD.getRank();
+		System.out.println("My rank is "+myrank);
 		if (myrank == 0) {
 			int[] x = { 45 };
 			int[] y = new int[1];
