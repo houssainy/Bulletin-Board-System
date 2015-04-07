@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import ssh.Jssh;
-import ssh.User;
 
 /**
  * 

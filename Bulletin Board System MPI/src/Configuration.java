@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import ssh.User;
-
 /**
  * 
  * @author houssainy
