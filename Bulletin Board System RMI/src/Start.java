@@ -66,11 +66,11 @@ public class Start {
 	private static void startUser(Jssh ssh, Configuration configuration,
 			User user) {
 		String command = "xterm -hold -e \"cd " + user.getFilePath()
-				+ " && javac rmi_implementation/" + user.getFileName()
+				+ " && javac rmi_implementation/" + user.getFileName() + ".java"
 				+ " && java rmi_implementation." + user.getFileName() + " ";
 		switch (user.getType()) {
 		case User.SERVER_TYPE:
-			command = "export DISPLAY=:13.0 && " + command;
+			command = "export DISPLAY=:0.0 && " + command;
 			command += configuration.getRegistryIp() + " "
 					+ configuration.getPort();
 			break;
@@ -81,7 +81,7 @@ public class Start {
 					+ " " + id++;
 			break;
 		case User.CLIENT_READER_TYPE:
-			command = "export DISPLAY=:11.0 && " + command;
+			command = "export DISPLAY=:0.0 && " + command;
 			command += configuration.getRegistryIp() + " "
 					+ configuration.getPort() + " " + User.CLIENT_READER_TYPE
 					+ " " + id++;
